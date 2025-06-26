@@ -13,4 +13,4 @@ def test_google_search(page):
     page.get_by_role('combobox', name='Search').fill('Playwright Python')
     page.keyboard.press('Enter')
 
-    expect(page).to_have_title(re.compile('Playwright123', re.IGNORECASE))
+    expect(page).to_have_title(re.compile('Playwright', re.IGNORECASE))
