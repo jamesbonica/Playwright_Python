@@ -1,15 +1,21 @@
 import pytest
-from playwright.sync_api import sync_playwright
+import asyncio
+from playwright.async_api import async_playwright, Browser, Page
+import pytest_asyncio
 
-@pytest.fixture(scope='session')
-def browser():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+
+@pytest_asyncio.fixture(scope="module", loop_scope="module")
+async def browser():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=False)
         yield browser
-        browser.close()
+        await browser.close()
 
-@pytest.fixture
-def page(browser):
-    page = browser.new_page()
+
+@pytest_asyncio.fixture(scope="module", loop_scope="module")
+async def page(browser):
+    page = await browser.new_page()
     yield page
-    page.close()
+    await browser.close()
+
+
