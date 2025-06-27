@@ -1,15 +1,13 @@
 import pytest
-from playwright.sync_api import sync_playwright
-
-@pytest.fixture(scope='session')
-def browser():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        yield browser
-        browser.close()
+from playwright.sync_api import sync_playwright, Page
+from pages.orangehrm_home_page import HomePage
+from pages.orangehrm_login_page import LoginPage
 
 @pytest.fixture
-def page(browser):
-    page = browser.new_page()
-    yield page
-    page.close()
+def login_page(page: Page) -> LoginPage:
+    return LoginPage(page)
+
+@pytest.fixture
+def home_page(page: Page) -> HomePage:
+    return HomePage(page)
+
