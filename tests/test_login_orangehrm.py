@@ -4,8 +4,9 @@ from pages.orangehrm_home_page import HomePage
 from pages.orangehrm_login_page import LoginPage
 
 
-def test_example(login_page: LoginPage, home_page: HomePage):
-
+def test_example(page: Page):
+    login_page = LoginPage(page)
+    home_page = HomePage(page)
 
     login_page.goto()
   
