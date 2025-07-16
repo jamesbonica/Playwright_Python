@@ -1,4 +1,7 @@
 import pytest
+from playwright.sync_api import Page
+from pages.orangehrm_home_page import HomePage
+from pages.orangehrm_login_page import LoginPage
 
 def pytest_addoption(parser):
     parser.addoption(
@@ -19,4 +22,12 @@ def trace_setup(context, request):
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     yield
     context.tracing.stop(path=f"trace_{request.node.name}.zip")
+
+@pytest.fixture
+def login_page(page: Page):
+    return LoginPage(page)
+
+@pytest.fixture
+def home_page(page: Page):
+    return HomePage(page)
 
